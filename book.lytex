@@ -1,0 +1,344 @@
+\documentclass{article}
+\usepackage{verbatim}
+\usepackage{listings}
+\addtolength{\oddsidemargin}{-1.2in}
+\addtolength{\evensidemargin}{-1.2in}
+\addtolength{\textwidth}{2.5in}
+
+\addtolength{\topmargin}{-.875in}
+\addtolength{\textheight}{1.75in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+\begin{document}
+\title{LilyPond Music Engraving Workshop}
+\author{Phil Crow}
+\maketitle
+For music teachers, choir directors, arrangers, composers, and anyone else who appreciates beautiful sheet music
+\begin{center}
+  \copyright 2019 Phil Crow\\
+  Creative Commons Attribution-ShareAlike 4.0 International License\\
+  Music engraving by LilyPond 2.18.2 — www.lilypond.org\\
+\end{center}
+
+%Some Examples
+%    Cello Hymns
+%    Lisa's Hymnal with Jonah Anthem
+%    Haydn Trumpet Concerto for Euphonium
+%    More from the web
+
+\section{Installation or The Web}
+
+To install, go to lilypond.org/download and choose the version for your machine.
+Install as you would with any software. Linux users can also use apt or the like.
+
+Visit http://lilybin.com, if you don't want to or can't install lilypond.
+
+\section{A Scale}
+
+The default input on lilybin.com is a good place to start. Output:
+
+\lilypondfile[quote,noindent]{sources/lilybindefault.ly}
+
+Input:
+\lstinputlisting[numbers=left]{../sources/lilybindefault.ly}
+
+{\bf Note:} I have added line numbers to the input file. These are not part of the input, but are here so I can direct your
+attention to individual lines.
+
+Explanation:
+
+Line 1: a comment. Comments begin with \% and continue
+to the end of the line. This one simply points out that I borrowed from their website. All comments are optional.
+I use them to remind myself of source material, the common words for a hymn tune, etc.
+
+Line 2: score is the fundamental unit of musical composition in lilypond. Commands in lilypond
+start with a backslash and are usually musical terms. This is the simplest score that includes midi output.
+Some commands wrap things in braces. This score continues to line 8.
+
+Line 3: group notes in additional braces. This keeps it separate from things like the midi command.
+
+Line 4: Notes are just their letters, so c in this case. The letters
+are always lowercase. The apostrophe indicates up one octave. The default c is the one
+in the bass staff. We could go up to the c in the treble staff with a second apostrophe.
+To go lower, omit the apostrophe or use commas.
+
+By default we get quarter notes.
+
+Lines 6 and 7: to get midi output include layout and midi commands.
+
+That was a lot to say about a one note song. Now, let's turn that into a scale.
+
+\lilypondfile[quote,noindent]{sources/scale.ly}
+
+\lstinputlisting[numbers=left]{../sources/scale.ly}
+
+Explanation:
+
+I have omitted the opening comment.
+
+Line 3: extend the notes up the c major scale.  Note that the higher c has two apostrophes.
+
+Line 8: a version command. This is useful so your friends don't try to compile your file on an older
+version of lilypond without warning.
+
+All those apostrophes can be annoying.
+
+\lstinputlisting[numbers=left]{../sources/relativescale.ly}
+
+Output: same as before.
+
+Explanation:
+
+Line 2: relative means each note will be close to the prior note. Our first note is
+close to middle c.
+We will only use apostrophes if the note is too low and commas only when it is too high.
+
+\section{A Hymn (Fragment)}
+
+Here we will begin to construct an SATB arrangement of Amazing Grace. Eventually, it will look like an {\it a cappella} choir anthem.
+Our tune comes from the 1910 Free Methodist Hymnal.
+
+\subsection{One Vocal Part}
+
+A soprano line, without lyrics.
+
+\lilypondfile[quote,noindent]{sources/amazing.sop.1.ly}
+\lstinputlisting[numbers=left]{../sources/amazing.sop.1.ly}
+
+Explanation:
+
+Line 3: a key is a note and major or minor. All need a backslash except the pitch.
+
+Line 4: has several new features.
+\begin{itemize}
+    \item sharps: add \verb+is+ to the note (Dutch abbreviation for sharp), as in \verb+fis+.
+    \item flats: use \verb+es+ as in \verb+bes+.
+    \item duration:
+        \begin{itemize}
+            \item 1 whole
+            \item 2 half
+            \item 4 quarter (the initial default)
+            \item 8 eighth
+            \item 16 sixteenth
+        \end{itemize}
+    \item dotted notes: add a dot as in our last note: \verb+a2.+
+    \item barline checks: add \verb+|+ where you think a bar should be, uses:
+        \begin{itemize}
+            \item ease editing with visual measure division in the input
+            \item lilypond will warn of possible counting errors, if your lines don't match output
+        \end{itemize}
+    \item a double bar line: \verb+\bar ''|.''+, more choices below
+\end{itemize}
+Keep in mind that lilypond will not conform your notes to the key. It assumes you have asked for the correct pitch.
+If you are out of the key, it will add an accidental. Scanning for accidentals is essential during editing.
+
+More bar choices:
+
+\lilypondfile[quote,noindent]{sources/barchoices.ly}
+\verbatiminput{../sources/barchoices.ly}
+
+Search for ``lilypond bar'' for even more examples.
+
+\subsection{Adding Altos}
+
+Let's organize a bit and add the alto part in typical choral style.
+
+\lilypondfile[quote,noindent]{sources/amazing.sop.alto.ly}
+
+Features of output:
+\begin{itemize}
+    \item two parts on one staff
+    \item stems up for soprano, down for alto
+\end{itemize}
+
+Later we will see piano music with chords. One of the templates (see pianoreduction.template.ly)
+shows piano reduction from separate parts.
+
+\lstinputlisting[numbers=left]{../sources/amazing.sop.alto.ly}
+
+Explanation:
+
+Line 1-3: name the soprano line using \verb+= {}+ to wrap the notes. Same on Lines 4-6 for altos. Organization soothes the mind. Removing notes from the
+middle of the score makes editing easier and we can refer to them by name at later times.
+
+Lilypond names can only contain letters, no numbers, spaces, or punctation.
+Roman numerals and capital letters come in handy here.
+Once a line has a name, you can refer to it in the score by pretending it is a command.
+
+Line 2: the music from the last example, except the first note is explicitly a quarter note. Lilypond will transfer durations from
+line to line. Always include the duration on the first note of a passage.
+
+Line 8: the new ChoirStaff will group the staves together with a big bracket, once we add the low parts.
+(We can't see it yet.) Everything between the \verb+<<+ on line 8 and the \verb+>>+ on line 25 belongs to this giant staff.
+
+Line 9: add one Staff for the high parts called highVoices, this name is documentation, we won't refer to it.
+
+Lines 10 and 18: add one Voice for each high part, sopranos and altos.
+
+Lines 11 and 19: voiceOne uses the up stems, voiceTwo the down stems.
+
+Line 13: adds the key, we only need this for one part, they are sharing the staff.
+
+Lines 14 and 21: refer to the notes from lines 1-3 and 4-6 by name as a command.
+
+Line 15: add a bar line, only one part in the whole ChoirStaff needs this.
+
+\subsection{Adding the Lower Parts}
+
+\lilypondfile[quote,noindent]{sources/amazing.satb.ly}
+\lstinputlisting[numbers=left]{../sources/amazing.satb.ly}
+
+Explanation:
+
+Lines 7-12 define low part music just as we did for the higher parts. Note the occasional use of comma and apostrophe to get the right
+octave on the pitches.
+
+Lines 31-45 are just like the high voice parts with a couple of exceptions.
+\begin{itemize}
+    \item names have been changed
+    \item bass clef (line 35)
+    \item pitches are relative to c in the bass staff (lines 34, 42)
+    \item no bar command
+\end{itemize}
+
+If we save this as a template, we can have a new hymn by changing only the various lines, the relative starting pitch, and the key.
+
+\subsection{Lyrics}
+
+Adding words is just a simpler special kind of line. But, there are special rules for aligning words with notes.
+
+\lilypondfile[quote,noindent]{sources/amazing.final.ly}
+\lstinputlisting[numbers=left]{../sources/amazing.final.ly}
+
+Explanation:
+
+Three steps to adding lyrics:
+\begin{itemize}
+    \item type the poem in verses (lines 13-20)
+    \item place the lyrics in the ChoirStaff (lines 39 and 40)
+    \item link the lyrics to a part with the context command (lines 57 and 58)
+\end{itemize}
+
+Details:
+
+Lines 13 and 17: use lyricmode to indicate that a line has words instead of notes.
+
+Lines 14 and 18: use the set stanza command to number the verses (if desired). Pay attention to the strange use of \verb+#+.
+The contents of the quotes are almost arbitrary. Try \verb+"1,5."+ if you want to indicate the words will be used again for verse 5.
+
+Lines 15 and 19: type out the poem. Use spaces between the syllables. Each syllable binds to one note. Use underscore to use up more than one note.
+Punctuation will appear in the finished work, so mind your grammar.
+
+This concludes our hymn fragment. Feel free to complete it with the other half of each verse and additional verses.
+
+\section{Other Basic Concepts}
+
+So far, we have seen how to choose a key and a clef. We have seen sharps (but not flats). We have seen quarter notes,
+eighth notes, and dotted half notes, but not others. What we have seen is dwarfed by what we have not.
+
+I almost called this section Eine Kleine Not Music. I am going to show how to engrave a bunch of different musical notations
+without making a coherent song.
+
+\lilypondfile[quote,noindent]{sources/notation.1.ly}
+\lstinputlisting[numbers=left]{../sources/notation.1.ly}
+
+Explanation:
+
+Line 3: a minor key
+
+Line 4: 3/4 time
+
+Line 5: new features:
+\begin{itemize}
+    \item \verb+\p+ dynamic mark
+    \item \verb+ees+ an e flat (with an accidental since e is not flat in d minor)
+    \item \verb+~+ is for tie to span measures
+    \item \verb+r+ is for rest, use durations just like for notes
+    \item the line ends with a simple double bar to set off the time change
+\end{itemize}
+
+Line 6: cut time, uses slashed C, like 4/4 uses C
+
+Line 7: new features:
+\begin{itemize}
+    \item whole notes have duration 1
+    \item \verb+\f+ another dynamic mark
+\end{itemize}
+
+Line 8: compressFullBarRests to avoid lots of empty measures.
+
+Line 9: big R for long rests, duration is beats in the measure, times (\verb+*+) number of measures, needs compressFullBarRests from line 8.
+
+Line 10: slurs use parantheses, leave the first note on the outside.
+
+Line 12: the key command shows the key signature without bar lines, even if the sharps and flats are the same.
+
+Line 13: 9/8 time (hello Fanny Crosby and Phoebe Knapp).
+
+Line 14: new features:
+\begin{itemize}
+    \item repeat volta with a count of total times played, put music in braces
+    \item dotted eighth notes, just use a dot (see dotted half notes from earlier)
+    \item \verb+\mf+, another dynamic marking
+    \item 16 for sixteenth notes
+    \item note accidentals for notes outside the key
+\end{itemize}
+
+\section{Piano Music}
+
+Unlike voices and trumpets, pianos allow chords. Their music is often shown with a staff for each hand. This is worth exploring
+a bit.
+
+\lilypondfile[quote,noindent]{sources/piano.ly}
+\lstinputlisting[numbers=left]{../sources/piano.ly}
+
+Explanation:
+
+Line 2: new features:
+\begin{itemize}
+    \item for pickups use the partial command, say duration of mini-measure
+    \item use mark with default to get unadorned rehearsal letters (letter sequencing or numbering is automatic)
+    \item chords go inside \verb+<>+, place durations after that
+    \item \verb+\mp+ is one kind of dynamic mark, similarly for \verb+\pp+
+    \item \verb+\>+ begins a decrescendo wedge (ends on line 3 with \verb+\!+), use \verb+\<+ for crescendo wedge (ending is the same \verb+\!+)
+    \item a \verb+\bar ''||''+ is a lightweight double bar, here marking the end of a piano intro
+\end{itemize}
+
+Line 3: note the end of the decrescendo wedge \verb+\!+.
+
+Line 9 (ends on line 23): a PianoStaff gives us the nice brace grouping on the far left.
+
+Lines 10-22: two staves, quite similar to the ones for choral music seen earlier
+
+Line 13: transpose moves music from first note by the interval to the second note, here d in the bass staff becomes middle c, etc.
+
+Line 20: transpose again, but here only by a full step down from d to c (both in the bass clef staff)
+
+Originally, this song began in d minor. So, I typed in the notes for that key. I wanted to give the altos an opening
+solo, but the range seemed too high. So, I changed to c minor instead. That's why I used the transpose command.
+
+%Templates
+%    Solo Instrument
+%    Ensemble Instruments
+    %    SATB
+    %        Naming things
+    %        Lyrics
+    %        Sharing a Staff
+%Misc (Not covered aloud for all)
+%    Trills
+%    Cue Notes
+
+%Resources for Thumb Drive
+%    welcome to lilypond sample
+%    Templates:
+%        solo instrument
+%        ensemble of instruments (three parts)
+%        a single SATB hymn
+%        an anthem (reduce Jonah)
+%        a lytex book (reduce the hymnal)
+%    Lisa's Hymnal
+%    Jonah Anthem
+%    Cello Hymnal? (This would need to be redone as a lytex book.)
+
+\end{document}
