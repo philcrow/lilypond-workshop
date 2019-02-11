@@ -211,7 +211,7 @@ tenorLine = {
 tenorVerseIb = {
   \key c \minor
   \skip1*10 d2\rest
-  \transpose d c { b2^\p \tenorLineB }
+  \transpose d c { bes2^\p \tenorLineB }
   \skip2 \skip1*3
 }
 tenorVerseII = {
