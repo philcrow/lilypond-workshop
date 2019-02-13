@@ -1,4 +1,4 @@
-% a piano solo
+% a hymn with piano music, like in most hymnals
 \version "2.18.2"
 \header {
     title="Tallis Canon"
