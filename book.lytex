@@ -276,10 +276,14 @@ Line 12: the key command shows the key signature without bar lines, even if the 
 
 Line 13: 9/8 time (hello Fanny Crosby and Phoebe Knapp).
 
-Line 14: new features:
+Line 14: repeat volta with a count of total times played, put music in braces, indenting helps when editing
+
+Line 15:
 \begin{itemize}
-    \item repeat volta with a count of total times played, put music in braces
     \item dotted eighth notes, just use a dot (see dotted half notes from earlier)
+    \item \verb+^+ put something above the staff
+    \item \verb+\markup+ add musical advice as text, wrap it all in braces
+    \item \verb+\italic+ use italic font, wrap text in braces if it has multiple words
     \item \verb+\mf+, another dynamic marking
     \item 16 for sixteenth notes
     \item note accidentals for notes outside the key

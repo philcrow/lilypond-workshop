@@ -11,7 +11,9 @@
 
         \key f \major
         \time 9/8
-        \repeat volta 2 { a8. b16 c8 \mf  d4. e4. | ees8 d c bes4. a }
+        \repeat volta 2 {
+            a8.^\markup{\italic {tuti fruiti}} b16 c8 \mf  d4. e4. | ees8 d c bes4. a
+        }
     }
     \layout{}
     \midi{}
